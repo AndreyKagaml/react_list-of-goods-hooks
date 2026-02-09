@@ -20,13 +20,10 @@ export const goodsFromServer = [
 enum SortType {
   alphabetically = 'alphabetically',
   length = 'length',
+  default = '',
 }
 
-function prepareGoods(
-  goods: string[],
-  sortKey: SortType | null,
-  reverse?: boolean,
-) {
+function prepareGoods(goods: string[], sortKey: SortType, reverse?: boolean) {
   const goodsList = [...goods];
 
   if (sortKey) {
@@ -53,8 +50,8 @@ function prepareGoods(
 
 export const App: React.FC = () => {
   const [reversed, setReverse] = useState(false);
-  const [sortField, setSortField] = useState<SortType | null>(null);
-  let goods = prepareGoods(goodsFromServer, sortField, reversed);
+  const [sortField, setSortField] = useState<SortType>(SortType.default);
+  const goods = prepareGoods(goodsFromServer, sortField, reversed);
 
   return (
     <div className="section content">
@@ -89,14 +86,13 @@ export const App: React.FC = () => {
           Reverse
         </button>
 
-        {(sortField || reversed) && (
+        {(sortField !== SortType.default || reversed) && (
           <button
             type="button"
             className="button is-danger is-light"
             onClick={() => {
               setReverse(false);
-              setSortField(null);
-              goods = goodsFromServer;
+              setSortField(SortType.default);
             }}
           >
             Reset
