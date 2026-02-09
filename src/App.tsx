@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'bulma/css/bulma.css';
 import './App.scss';
-import { GoodsList } from './components/GoodsList';
+import { RenderGoodsList } from './components/GoodsList';
 import cn from 'classnames';
 
 export const goodsFromServer = [
@@ -99,7 +99,7 @@ export const App: React.FC = () => {
           </button>
         )}
       </div>
-      <GoodsList goods={goods} />
+      <RenderGoodsList goods={goods} />
     </div>
   );
 };
