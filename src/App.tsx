@@ -3,6 +3,8 @@ import 'bulma/css/bulma.css';
 import './App.scss';
 import { RenderGoodsList } from './components/GoodsList';
 import cn from 'classnames';
+import { SortType } from './types/SortType';
+import { Button } from './components/Button';
 
 export const goodsFromServer = [
   'Dumplings',
@@ -16,12 +18,6 @@ export const goodsFromServer = [
   'Jam',
   'Garlic',
 ];
-
-enum SortType {
-  alphabetically = 'alphabetically',
-  length = 'length',
-  default = '',
-}
 
 function prepareGoods(goods: string[], sortKey: SortType, reverse?: boolean) {
   const goodsList = [...goods];
@@ -56,47 +52,39 @@ export const App: React.FC = () => {
   return (
     <div className="section content">
       <div className="buttons">
-        <button
-          type="button"
-          className={cn('button', 'is-info', {
+        <Button
+          classList={cn('button', 'is-info', {
             'is-light': sortField !== SortType.alphabetically,
           })}
-          onClick={() => setSortField(SortType.alphabetically)}
-        >
-          Sort alphabetically
-        </button>
+          onChange={() => setSortField(SortType.alphabetically)}
+          name={'Sort alphabetically'}
+        />
 
-        <button
-          type="button"
-          className={cn('button', 'is-success', {
+        <Button
+          classList={cn('button', 'is-success', {
             'is-light': sortField !== SortType.length,
           })}
-          onClick={() => setSortField(SortType.length)}
-        >
-          Sort by length
-        </button>
+          onChange={() => setSortField(SortType.length)}
+          name={'Sort by length'}
+        />
 
-        <button
-          type="button"
-          className={cn('button', 'is-warning', {
+        <Button
+          classList={cn('button', 'is-warning', {
             'is-light': !reversed,
           })}
-          onClick={() => setReverse(!reversed)}
-        >
-          Reverse
-        </button>
+          onChange={() => setReverse(!reversed)}
+          name={'Reverse'}
+        />
 
         {(sortField !== SortType.default || reversed) && (
-          <button
-            type="button"
-            className="button is-danger is-light"
-            onClick={() => {
+          <Button
+            classList={'button is-danger is-light'}
+            onChange={() => {
               setReverse(false);
               setSortField(SortType.default);
             }}
-          >
-            Reset
-          </button>
+            name={'Reset'}
+          />
         )}
       </div>
       <RenderGoodsList goods={goods} />
